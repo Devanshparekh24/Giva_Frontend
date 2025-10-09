@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import BASE_URL from "../../BASE_URL";
 // Action Types
 export const FETCH_NAVBAR_DATA_REQUEST = 'FETCH_NAVBAR_DATA_REQUEST';
 export const FETCH_NAVBAR_DATA_SUCCESS = 'FETCH_NAVBAR_DATA_SUCCESS';
@@ -25,7 +25,7 @@ export const fetchNavbarData = () => {
   return async (dispatch) => {
     dispatch(fetchNavbarDataRequest());
     try {
-      const response = await axios.get('http://localhost:5000/api/navbar/navbarData');
+      const response = await axios.get(` ${BASE_URL}/navbar/navbarData`);
       dispatch(fetchNavbarDataSuccess(response.data));
     } catch (error) {
       dispatch(fetchNavbarDataFailure(error.message));

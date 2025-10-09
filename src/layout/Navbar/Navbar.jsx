@@ -68,9 +68,8 @@ function Navbar() {
               <div className="flex-shrink-0">
                 {/* Logo */}
                 <div className="text-xl md:text-2xl font-bold text-black tracking-wider">
-                  GIVA
+                  <a href="/">GIVA</a>
                 </div>
-
                 {/* Location Selector - Under Logo (Small devices only) */}
                 <div className="sm:hidden flex items-center relative mt-1">
                   <button
@@ -200,9 +199,8 @@ function Navbar() {
 
             {/* Sidebar */}
             <div
-              className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 md:hidden ${
-                isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-              }`}
+              className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 md:hidden ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+                }`}
             >
               {/* Sidebar Header */}
               <div className="flex items-center justify-between p-4 border-b border-gray-200">
@@ -278,8 +276,8 @@ function Navbar() {
                                       href={`/${navItem.title
                                         .toLowerCase()
                                         .replace(/\s/g, "-")}/${subMenu.title
-                                        .toLowerCase()
-                                        .replace(/\s/g, "-")}`}
+                                          .toLowerCase()
+                                          .replace(/\s/g, "-")}`}
                                       className="block py-2 px-3 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
                                       onClick={toggleSidebar} // Close sidebar on item click
                                     >
@@ -381,9 +379,9 @@ function Navbar() {
                           className=" whitespace-nowrap text-gray-700 hover:text-pink-600 font-medium text-sm md:text-base"
                         >
                           {navItem.title}
-                         
+
                         </a>
-                        
+
                       )
                     )}
                 </div>

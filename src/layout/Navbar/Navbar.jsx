@@ -43,6 +43,7 @@ function Navbar() {
 
   return (
     <>
+
       <div className="w-full font-lato">
         {/* Promotional Banner */}
         <div className="bg-orange-100 text-center py-2 px-4">
@@ -88,6 +89,7 @@ function Navbar() {
                       <div className="p-3">
                         <div>
                           <X
+                            onClick={() => setIsLocationOpen(false)}
                             className="h-6 w-6 text-gray-500 cursor-pointer"
                             size={24}
                           />{" "}
@@ -204,7 +206,7 @@ function Navbar() {
             >
               {/* Sidebar Header */}
               <div className="flex items-center justify-between p-4 border-b border-gray-200">
-                <h2 className="text-lg font-semibold text-gray-800">Menu</h2>
+                <h2 className="text-lg font-semibold text-gray-800">Giva</h2>
                 <button
                   onClick={toggleSidebar}
                   className="p-1 rounded-md hover:bg-gray-100 transition-colors"
@@ -227,7 +229,7 @@ function Navbar() {
                           // Handle menu item click
                           console.log(`${item.label} clicked`);
                           // Optionally close sidebar after selection
-                          // setisMobileMenuOpen(false);
+                          setisMobileMenuOpen(false);
                         }}
                       >
                         <IconComponent className="h-5 w-5 mr-3 text-gray-600" />
@@ -318,76 +320,81 @@ function Navbar() {
                 <div className="flex flex-wrap items-center space-x-2 sm:space-x-6 md:space-x-8  ">
                   {loading && <div>Loading navigation...</div>}
                   {error && <div>Error: {error}</div>}
-                  {data &&
-                    data.data &&
-                    data.data.map((navItem) =>
-                      navItem.title === "Shop by Category" ? (
-                        <div
-                          key={navItem.Navid}
-                          className="relative inline-block"
-                        >
-                          <button
-                            onClick={toggleCategoryMenu}
-                            className="flex items-center whitespace-nowrap text-gray-700 hover:text-pink-600 font-medium text-sm md:text-base"
-                          >
-                            {navItem.title}
-                            {isCategoryOpen ? (
-                              <ChevronUp className="ml-1 h-3 w-3 md:h-4 md:w-4" />
-                            ) : (
-                              <ChevronDown className="ml-1 h-3 w-3 md:h-4 md:w-4" />
-                            )}
-                          </button>
-
-                          {isCategoryOpen && (
-                            <div className="absolute left-0 mt-2 z-50 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow-lg">
-                              <ul className="py-2 text-sm text-gray-700">
-                                {navItem.subMenus &&
-                                  navItem.subMenus.map((subMenu) => (
-                                    <li key={subMenu.NavSubid}>
-                                      <a
-                                        href={`/category/${subMenu.title.toLowerCase()}`}
-                                        className="block px-4 py-2 hover:bg-gray-100"
-                                      >
-                                        {subMenu.title}
-                                      </a>
-                                    </li>
-                                  ))}
-                              </ul>
-                            </div>
-                          )}
-                        </div>
-                      ) : navItem.subMenus && navItem.subMenus.length > 0 ? (
-                        <div
-                          key={navItem.Navid}
-                          className="relative inline-block"
-                        >
-                          <button
-                            onClick={() => {
-                              /* Handle other dropdowns if needed */
-                            }}
-                            className="flex items-center whitespace-nowrap text-gray-700 hover:text-pink-600 font-medium text-sm md:text-base"
-                          >
-                            {navItem.title}
-                            <ChevronDown className="ml-1 h-3 w-3 md:h-4 md:w-4" />
-                          </button>
-                          {/* Add dropdown content for other subMenus here if needed */}
-                        </div>
-                      ) : (
-                        <a
-                          key={navItem.Navid}
-                          href="#" // Adjust href based on actual links
-                          className=" whitespace-nowrap text-gray-700 hover:text-pink-600 font-medium text-sm md:text-base"
+                  {data && data.data && data.data.map((navItem) => navItem.title === "Shop by Category" ?
+                    (
+                      <div
+                        key={navItem.Navid}
+                        className="relative inline-block"
+                      >
+                        <button
+                          onClick={toggleCategoryMenu}
+                          className="flex items-center whitespace-nowrap text-gray-700 hover:text-pink-600 font-medium text-sm md:text-base"
                         >
                           {navItem.title}
+                          {isCategoryOpen ? (
+                            <ChevronUp className="ml-1 h-3 w-3 md:h-4 md:w-4" />
+                          ) : (
+                            <ChevronDown className="ml-1 h-3 w-3 md:h-4 md:w-4" />
+                          )}
+                        </button>
 
-                        </a>
+                        {isCategoryOpen && (
+                          <div className="absolute left-0 mt-2 z-50 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow-lg">
+                            <ul className="py-2 text-sm text-gray-700">
+                              {navItem.subMenus &&
+                                navItem.subMenus.map((subMenu) => (
+                                  <li key={subMenu.NavSubid}>
+                                    <a
+                                      href={`/category/${subMenu.title.toLowerCase()}`}
+                                      className="block px-4 py-2 hover:bg-gray-100"
+                                    >
+                                      {subMenu.title}
+                                    </a>
+                                  </li>
+                                ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    ) : navItem.subMenus && navItem.subMenus.length > 0 ? (
+                      <div
+                        key={navItem.Navid}
+                        className="relative inline-block"
+                      >
+                        <button
 
-                      )
-                    )}
+                          onClick={() => {
+
+                            // Handle other sub-menu toggles if needed
+                          }}
+                          className="flex items-center whitespace-nowrap text-gray-700 hover:text-pink-600 font-medium text-sm md:text-base"
+                        >
+                          {navItem.title}
+                          <ChevronDown className="ml-1 h-3 w-3 md:h-4 md:w-4" />
+                        </button>
+                        {/* Add dropdown content for other subMenus here if needed */}
+                      </div>
+                    ) : (
+                      <a
+                        key={navItem.Navid}
+                        href="#" // Adjust href based on actual links
+                        className=" whitespace-nowrap text-gray-700 hover:text-pink-600 font-medium text-sm md:text-base"
+                      >
+                        {navItem.title}
+
+                      </a>
+
+                    )
+                  )}
+
+
                 </div>
+
+
               </div>
             </div>
           </div>
+          
         </nav>
       </div>
     </>

@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 function Navbar() {
   const [isLocationOpen, setIsLocationOpen] = useState(false);
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(null); // State for currently open dropdown
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openSidebarSubMenu, setOpenSidebarSubMenu] = useState(null); // State for currently open sidebar sub-menu
 
@@ -229,7 +229,7 @@ function Navbar() {
                           // Handle menu item click
                           console.log(`${item.label} clicked`);
                           // Optionally close sidebar after selection
-                          setisMobileMenuOpen(false);
+                          // setisMobileMenuOpen(false);
                         }}
                       >
                         <IconComponent className="h-5 w-5 mr-3 text-gray-600" />
@@ -320,33 +320,41 @@ function Navbar() {
                 <div className="flex flex-wrap items-center space-x-2 sm:space-x-6 md:space-x-8  ">
                   {loading && <div>Loading navigation...</div>}
                   {error && <div>Error: {error}</div>}
-                  {data && data.data && data.data.map((navItem) => navItem.title === "Shop by Category" ?
+                  {data && data.data && data.data.map((navItem) => navItem.title === "Shop by Category" || navItem.title === "Gift Store" ?
                     (
-                      <div
-                        key={navItem.Navid}
-                        className="relative inline-block"
-                      >
+                      <div className="relative inline-block">
                         <button
-                          onClick={toggleCategoryMenu}
-                          className="flex items-center whitespace-nowrap text-gray-700 hover:text-pink-600 font-medium text-sm md:text-base"
+                          className={`flex items-center whitespace-nowrap font-medium text-sm md:text-base transition-all duration-200 ease-in-out ${
+                            openDropdown === navItem.Navid
+                              ? 'text-pink-600'
+                              : 'text-gray-700 hover:text-pink-600'
+                          }`}
+                          onMouseEnter={() => setOpenDropdown(navItem.Navid)}
                         >
                           {navItem.title}
-                          {isCategoryOpen ? (
-                            <ChevronUp className="ml-1 h-3 w-3 md:h-4 md:w-4" />
-                          ) : (
-                            <ChevronDown className="ml-1 h-3 w-3 md:h-4 md:w-4" />
-                          )}
+                          <span className={`ml-1 transition-transform duration-200 ease-in-out ${
+                            openDropdown === navItem.Navid ? 'rotate-180' : ''
+                          }`}>
+                            <ChevronDown className="h-3 w-3 md:h-4 md:w-4" />
+                          </span>
                         </button>
 
-                        {isCategoryOpen && (
-                          <div className="absolute left-0 mt-2 z-50 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow-lg">
+                        {openDropdown === navItem.Navid && (
+                          <div
+                            className="absolute left-0 mt-1 z-50 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow-lg border border-gray-200 animate-in fade-in-0 zoom-in-95 duration-200"
+                            onMouseEnter={() => setOpenDropdown(navItem.Navid)}
+                            onMouseLeave={() => {
+                              // Add slight delay before closing to improve UX
+                              setTimeout(() => setOpenDropdown(null), 150);
+                            }}
+                          >
                             <ul className="py-2 text-sm text-gray-700">
                               {navItem.subMenus &&
                                 navItem.subMenus.map((subMenu) => (
                                   <li key={subMenu.NavSubid}>
                                     <a
                                       href={`/category/${subMenu.title.toLowerCase()}`}
-                                      className="block px-4 py-2 hover:bg-gray-100"
+                                      className="block px-4 py-2 hover:bg-gray-100 transition-colors duration-150 cursor-pointer"
                                     >
                                       {subMenu.title}
                                     </a>
@@ -386,6 +394,7 @@ function Navbar() {
 
                     )
                   )}
+                  
 
 
                 </div>

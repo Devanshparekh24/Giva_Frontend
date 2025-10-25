@@ -3,7 +3,7 @@ import Navbar from '../../layout/Navbar/Navbar'
 
 function HomePage() {
   return (
-    <div>
+    <div className=''>
       {/* Navbar Layout */}
       <Navbar />
 

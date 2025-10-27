@@ -4,7 +4,6 @@ import { fetchNavbarData } from "../../redux";
 
 import Promotional_Banner from "../../components/Promotional_Banner";
 import {
-  Search,
   MapPin,
   ChevronDown,
   ChevronUp,
@@ -16,6 +15,7 @@ import {
   X,
   ChevronRight,
 } from "lucide-react";
+import SearchBar from "../../components/SearchBar";
 function Navbar() {
   const [isLocationOpen, setIsLocationOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null); // State for currently open dropdown
@@ -126,26 +126,9 @@ function Navbar() {
                     </div>
                   )}
                 </div>
-
-
-
               </div>
-
-
-
               {/* Search Bar */}
-              <div className="flex-1 max-w-lg mx-2 md:mx-4">
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Search Rings"
-                    className="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent text-sm"
-                  />
-                  <button className="absolute right-2 top-1/2 transform -translate-y-1/2">
-                    <Search className="h-5 w-5 text-gray-400" />
-                  </button>
-                </div>
-              </div>
+              <SearchBar />
 
               {/* Right Side Icons - Hidden on mobile */}
               <div className="hidden md:flex items-center space-x-6">
@@ -197,7 +180,7 @@ function Navbar() {
             >
               {/* Sidebar Header */}
               <div className="flex items-center justify-between p-4 border-b border-gray-200">
-                <h1 className="text-xs font-semibold text-gray-800 sm:text-lg">Giva</h1>
+                <h1 className="text-xs font-semibold text-gray-800 ">Giva</h1>
                 <button
                   onClick={toggleSidebar}
                   className="p-1 rounded-md hover:bg-gray-100 transition-colors"

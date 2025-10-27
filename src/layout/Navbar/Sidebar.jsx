@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import {fetchNavbarData} from '../../redux';
+import { fetchNavbarData } from '../../redux';
 import { useDispatch, useSelector } from 'react-redux';
 
 function Sidebar() {
     const [openSidebarSubMenu, setOpenSidebarSubMenu] = useState(null); // State for currently open sidebar sub-menu
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-     const dispatch = useDispatch();
-  const { loading, data, error } = useSelector((state) => state.navbar);
+    const dispatch = useDispatch();
+    const { loading, data, error } = useSelector((state) => state.navbar);
 
-  useEffect(() => {
-    dispatch(fetchNavbarData());
-  }, [dispatch]);
+    useEffect(() => {
+        dispatch(fetchNavbarData());
+    }, [dispatch]);
 
 
     const toggleSidebar = () => {

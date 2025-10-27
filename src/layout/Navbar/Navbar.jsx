@@ -73,7 +73,7 @@ function Navbar() {
                     </button>
 
                     {isLocationOpen && (
-                      <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                      <div className="absolute top-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-50 w-40">
                         <div className="p-3">
                           <div>
                             <X
@@ -108,7 +108,7 @@ function Navbar() {
                         Update Delivery Pincode
                       </div>
                     </div>
-                    <ChevronDown className="h-4 w-4" />
+                   {isLocationOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronUp className="h-4 w-4" />}
                   </button>
 
                   {isLocationOpen && (

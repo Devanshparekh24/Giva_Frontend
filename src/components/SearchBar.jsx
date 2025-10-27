@@ -15,7 +15,7 @@ function SearchBar() {
                         <input
                             type="text"
                             placeholder="Search Rings"
-                            className="w-full pl-4 pr-10 py-2 bg-transparent border-0 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 text-sm relative z-10"
+                            className="w-full pl-4 pr-10 py-2 bg-transparent border-0 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 text-sm relative z-10 "
                         />
                         <button className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10">
                             <Search className="h-5 w-5 text-gray-400 hover:text-pink-500 transition-colors" />

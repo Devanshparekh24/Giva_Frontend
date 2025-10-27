@@ -19,8 +19,10 @@ import SearchBar from "../../components/SearchBar";
 function Navbar() {
   const [isLocationOpen, setIsLocationOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null); // State for currently open dropdown
+  const [openSubDropdown, setOpenSubDropdown] = useState(null); // State for currently open sub-dropdown
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openSidebarSubMenu, setOpenSidebarSubMenu] = useState(null); // State for currently open sidebar sub-menu
+  const [openSidebarSubSubMenu, setOpenSidebarSubSubMenu] = useState(null); // State for currently open sidebar sub-sub-menu
 
   const dispatch = useDispatch();
   const { loading, data, error } = useSelector((state) => state.navbar);
@@ -60,7 +62,10 @@ function Navbar() {
                 <div className="text-xl md:text-2xl font-bold text-black tracking-wider sm:text-xs">
                   <a href="/">GIVA</a>
                   {/* Location Selector - Under Logo (Small devices only) */}
-                  <div className="sm:hidden flex items-center relative mt-1">
+                  <div
+                    onMouseLeave={() => setTimeout(() => setOpenDropdown(null), 150)}
+                    className="sm:hidden flex items-center relative mt-1"
+                  >
                     <button
                       onClick={() => setIsLocationOpen(!isLocationOpen)}
                       className="flex items-center space-x-1 text-xs text-gray-600 hover:text-gray-800"
@@ -96,9 +101,12 @@ function Navbar() {
                   </div>
                 </div>
                 {/* Location Selector - Regular position (sm+ devices) */}
-                <div className="hidden sm:flex items-center relative">
+                <div
+
+                  className="hidden sm:flex items-center relative">
                   <button
                     onClick={() => setIsLocationOpen(!isLocationOpen)}
+
                     className="flex items-center space-x-2 text-sm text-gray-600 hover:text-gray-800 border-r border-gray-200 pr-4 "
                   >
                     <MapPin className="h-4 w-4 text-pink-300" />
@@ -108,7 +116,7 @@ function Navbar() {
                         Update Delivery Pincode
                       </div>
                     </div>
-                   {isLocationOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronUp className="h-4 w-4" />}
+                    {isLocationOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronUp className="h-4 w-4" />}
                   </button>
 
                   {isLocationOpen && (
@@ -180,7 +188,7 @@ function Navbar() {
             >
               {/* Sidebar Header */}
               <div className="flex items-center justify-between p-4 border-b border-gray-200">
-                <h1 className="text-xs font-semibold text-gray-800 ">Giva</h1>
+                <h1 className="text-lg font-semibold text-gray-800 ">Giva</h1>
                 <button
                   onClick={toggleSidebar}
                   className="p-1 rounded-md hover:bg-gray-100 transition-colors"
@@ -225,17 +233,50 @@ function Navbar() {
                               <ul className="pl-4 space-y-1">
                                 {navItem.subMenus.map((subMenu) => (
                                   <li key={subMenu.NavSubid}>
-                                    <a
-                                      href={`/${navItem.title
-                                        .toLowerCase()
-                                        .replace(/\s/g, "-")}/${subMenu.title
+                                    {subMenu.submenuItems && subMenu.submenuItems.length > 0 ? (
+                                      <>
+                                        <button
+                                          onClick={() =>
+                                            setOpenSidebarSubSubMenu(
+                                              openSidebarSubSubMenu === subMenu.NavSubid
+                                                ? null
+                                                : subMenu.NavSubid
+                                            )
+                                          }
+                                          className="flex items-center justify-between w-full py-2 px-3 text-left text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors duration-200"
+                                        >
+                                          <span>{subMenu.title}</span>
+                                          <ChevronRight className="h-3 w-3" />
+                                        </button>
+                                        {openSidebarSubSubMenu === subMenu.NavSubid && (
+                                          <ul className="pl-4 space-y-1">
+                                            {subMenu.submenuItems.map((item) => (
+                                              <li key={item.id || item.title}>
+                                                <a
+                                                  href={item.link || `/category/${item.title.toLowerCase().replace(/\s/g, '-')}`}
+                                                  className="block py-2 px-3 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
+                                                  onClick={toggleSidebar} // Close sidebar on item click
+                                                >
+                                                  {item.title}
+                                                </a>
+                                              </li>
+                                            ))}
+                                          </ul>
+                                        )}
+                                      </>
+                                    ) : (
+                                      <a
+                                        href={`/${navItem.title
                                           .toLowerCase()
-                                          .replace(/\s/g, "-")}`}
-                                      className="block py-2 px-3 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
-                                      onClick={toggleSidebar} // Close sidebar on item click
-                                    >
-                                      {subMenu.title}
-                                    </a>
+                                          .replace(/\s/g, "-")}/${subMenu.title
+                                            .toLowerCase()
+                                            .replace(/\s/g, "-")}`}
+                                        className="block py-2 px-3 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
+                                        onClick={toggleSidebar} // Close sidebar on item click
+                                      >
+                                        {subMenu.title}
+                                      </a>
+                                    )}
                                   </li>
                                 ))}
                               </ul>
@@ -300,13 +341,47 @@ function Navbar() {
                             <ul className="py-2 text-sm text-gray-700">
                               {navItem.subMenus &&
                                 navItem.subMenus.map((subMenu) => (
-                                  <li key={subMenu.NavSubid}>
-                                    <a
-                                      href={`/category/${subMenu.title.toLowerCase()}`}
-                                      className="block px-4 py-2 hover:bg-gray-100 transition-colors duration-150 cursor-pointer"
-                                    >
-                                      {subMenu.title}
-                                    </a>
+                                  <li key={subMenu.NavSubid} className="relative">
+                                    {subMenu.submenuItems && subMenu.submenuItems.length > 0 ? (
+                                      <>
+                                        <button
+                                          className="flex items-center justify-between w-full px-4 py-2 hover:bg-gray-100 transition-colors duration-150 cursor-pointer"
+                                          onMouseEnter={() => setOpenSubDropdown(subMenu.NavSubid)}
+                                        >
+                                          {subMenu.title}
+                                          <ChevronRight className="h-3 w-3" />
+                                        </button>
+                                        {openSubDropdown === subMenu.NavSubid && (
+                                          <div
+                                            className="absolute left-full top-0 z-50 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow-lg border border-gray-200 animate-in fade-in-0 zoom-in-95 duration-200"
+                                            onMouseEnter={() => setOpenSubDropdown(subMenu.NavSubid)}
+                                            onMouseLeave={() => {
+                                              setTimeout(() => setOpenSubDropdown(null), 150);
+                                            }}
+                                          >
+                                            <ul className="py-2 text-sm text-gray-700">
+                                              {subMenu.submenuItems.map((item) => (
+                                                <li key={item.id || item.title}>
+                                                  <a
+                                                    href={item.link || `/category/${item.title.toLowerCase().replace(/\s/g, '-')}`}
+                                                    className="block px-4 py-2 hover:bg-gray-100 transition-colors duration-150 cursor-pointer"
+                                                  >
+                                                    {item.title}
+                                                  </a>
+                                                </li>
+                                              ))}
+                                            </ul>
+                                          </div>
+                                        )}
+                                      </>
+                                    ) : (
+                                      <a
+                                        href={`/category/${subMenu.title.toLowerCase()}`}
+                                        className="block px-4 py-2 hover:bg-gray-100 transition-colors duration-150 cursor-pointer"
+                                      >
+                                        {subMenu.title}
+                                      </a>
+                                    )}
                                   </li>
                                 ))}
                             </ul>

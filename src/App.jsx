@@ -1,5 +1,5 @@
-import 'preline'; // Preline’s JS will auto-initialize components
-import HomePage from "./pages/Home/HomePage";
+import 'preline';
+import HomePage from "./views/pages/Home/HomePage";
 function App() {
   return (
     <>

@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useSliderViewModel } from '../../viewmodels/useSliderViewModel';
 
 const categories = [
   {
@@ -45,33 +46,13 @@ const categories = [
 ];
 
 function Slider() {
-  const scrollContainerRef = useRef(null);
-  const [showLeftArrow, setShowLeftArrow] = useState(false);
-  const [showRightArrow, setShowRightArrow] = useState(true);
-
-  const scroll = (direction) => {
-    const container = scrollContainerRef.current;
-    if (container) {
-      const scrollAmount = 350;
-      const newScrollLeft = direction === 'left'
-        ? container.scrollLeft - scrollAmount
-        : container.scrollLeft + scrollAmount;
-      container.scrollTo({
-        left: newScrollLeft,
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  const handleScroll = () => {
-    const container = scrollContainerRef.current;
-    if (container) {
-      setShowLeftArrow(container.scrollLeft > 20);
-      setShowRightArrow(
-        container.scrollLeft < container.scrollWidth - container.clientWidth - 20
-      );
-    }
-  };
+  const {
+    scrollContainerRef,
+    showLeftArrow,
+    showRightArrow,
+    scroll,
+    handleScroll
+  } = useSliderViewModel();
 
   return (
     <div className="w-full bg-white flex flex-col items-center pt-8 pb-12">

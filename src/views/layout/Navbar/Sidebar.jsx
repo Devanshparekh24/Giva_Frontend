@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { fetchNavbarData } from '../../redux';
+import { fetchNavbarData } from '../../../models';
 import { useDispatch, useSelector } from 'react-redux';
 
 function Sidebar() {

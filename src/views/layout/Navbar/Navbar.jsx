@@ -1,7 +1,4 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchNavbarData } from "../../redux";
-
+import { useNavbarViewModel } from "../../../viewmodels/useNavbarViewModel";
 import Promotional_Banner from "../../components/Promotional_Banner";
 import {
   MapPin,
@@ -17,23 +14,23 @@ import {
 } from "lucide-react";
 import SearchBar from "../../components/SearchBar";
 function Navbar() {
-  const [isLocationOpen, setIsLocationOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState(null); // State for currently open dropdown
-  const [openSubDropdown, setOpenSubDropdown] = useState(null); // State for currently open sub-dropdown
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [openSidebarSubMenu, setOpenSidebarSubMenu] = useState(null); // State for currently open sidebar sub-menu
-  const [openSidebarSubSubMenu, setOpenSidebarSubSubMenu] = useState(null); // State for currently open sidebar sub-sub-menu
-
-  const dispatch = useDispatch();
-  const { loading, data, error } = useSelector((state) => state.navbar);
-
-  useEffect(() => {
-    dispatch(fetchNavbarData());
-  }, [dispatch]);
-
-  const toggleSidebar = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+  const {
+    isLocationOpen,
+    setIsLocationOpen,
+    openDropdown,
+    setOpenDropdown,
+    openSubDropdown,
+    setOpenSubDropdown,
+    isMobileMenuOpen,
+    openSidebarSubMenu,
+    setOpenSidebarSubMenu,
+    openSidebarSubSubMenu,
+    setOpenSidebarSubSubMenu,
+    loading,
+    data,
+    error,
+    toggleSidebar
+  } = useNavbarViewModel();
 
   return (
     <>
